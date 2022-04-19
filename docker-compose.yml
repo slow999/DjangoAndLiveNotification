@@ -5,6 +5,7 @@ services:
     command: daphne -b 0.0.0.0 -p 8001 mysite.asgi:application
     ports:
       - 8001:8001
+    restart: unless-stopped
 
   web_http:
     build: web/
@@ -12,25 +13,26 @@ services:
     volumes:
       - static_data:/var/www/mysite/static/
       - uwsgi_data:/tmp/uwsgi/
+    restart: unless-stopped
 
   nginx:
      depends_on:
        - web_http
        - web_channel
      build: nginx/
-     restart: always
      ports:
        - 8888:80
      volumes:
        - static_data:/var/www/mysite/static/:ro
        - uwsgi_data:/tmp/uwsgi/
+     restart: unless-stopped
 
   redis:
     image: redis
-    command: redis-server
-    restart: always
+    command: redis-server --requirepass mypassword
     ports:
       - 6379:6379
+    restart: unless-stopped
 
 volumes:
   static_data:
