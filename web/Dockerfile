@@ -1,4 +1,6 @@
-FROM ubuntu:20.04
+FROM python:3.8-alpine
+
+RUN apk add python3-dev build-base linux-headers pcre-dev libffi-dev
 
 RUN mkdir /codes/
 WORKDIR codes
@@ -10,9 +12,6 @@ COPY manage.py manage.py
 COPY requirements.txt requirements.txt
 COPY mysite.uwsgi.ini mysite.uwsgi.ini
 COPY db.sqlite3 db.sqlite3
-
-RUN apt-get update && \
-apt-get install -y python3.8 python3.8-dev python3.8-distutils python3.8-venv python3-pip
 
 RUN pip install uwsgi daphne
 RUN pip install -r requirements.txt
