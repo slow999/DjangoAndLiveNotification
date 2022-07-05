@@ -2,7 +2,7 @@ version: "3.9"
 services:
   web_channel:
     build: web/
-    command: daphne -b 0.0.0.0 -p 8001 mysite.asgi:application
+    command: gunicorn mysite.asgi:application --workers 2 --work-class uvicorn.workers.UvicornWorker --bind 0.0.0.0:8001
     ports:
       - 8001:8001
     restart: unless-stopped

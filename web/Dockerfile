@@ -13,7 +13,7 @@ COPY requirements.txt requirements.txt
 COPY mysite.uwsgi.ini mysite.uwsgi.ini
 COPY db.sqlite3 db.sqlite3
 
-RUN pip install uwsgi daphne
+RUN pip install gunicorn daphne
 RUN pip install -r requirements.txt
 RUN python3 manage.py collectstatic
 
