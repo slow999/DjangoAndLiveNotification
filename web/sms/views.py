@@ -18,10 +18,9 @@ def new_message(request):
         form = MessageForm(request.POST)
         if form.is_valid():
             print('Sending sms...')
-            time.sleep(1)
-            print('Message is sent.')
             channel_layer = get_channel_layer()
             async_to_sync(channel_layer.group_send)('new_message', {'type': 'notify_client', 'message': f'email is sent.{datetime.datetime.now()}'})
+            print('Message is sent.')
         else:
             print('Something is wrong')
             print(form.errors)
