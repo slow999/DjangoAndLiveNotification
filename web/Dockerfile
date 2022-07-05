@@ -12,8 +12,10 @@ COPY manage.py manage.py
 COPY requirements.txt requirements.txt
 COPY mysite.uwsgi.ini mysite.uwsgi.ini
 COPY db.sqlite3 db.sqlite3
+COPY gunicorn.app.conf.py gunicorn.app.conf.py
+COPY gunicorn.channel.conf.py gunicorn.channel.conf.py
 
-RUN pip install gunicorn daphne
+RUN pip install gunicorn uvicorn
 RUN pip install -r requirements.txt
 RUN python3 manage.py collectstatic
 

@@ -1,18 +1,18 @@
 version: "3.9"
 services:
-  web_channel:
-    build: web/
-    command: gunicorn mysite.asgi:application --workers 2 --work-class uvicorn.workers.UvicornWorker --bind 0.0.0.0:8001
-    ports:
-      - 8001:8001
-    restart: unless-stopped
+#  web_channel:
+#    build: web/
+#    command: gunicorn mysite.asgi:application --workers 2 --work-class uvicorn.workers.UvicornWorker --bind 0.0.0.0:8001
+#    ports:
+#      - 8001:8001
+#    restart: unless-stopped
 
-  web_http:
+  web_app:
     build: web/
-    command: uwsgi --ini mysite.uwsgi.ini
+    command: gunicorn --config=gunicorn.app.conf.py
     volumes:
       - static_data:/var/www/mysite/static/
-      - uwsgi_data:/tmp/uwsgi/
+      - socket_data:/tmp/gunicorn/
     restart: unless-stopped
 
   nginx:
@@ -24,7 +24,7 @@ services:
        - 8888:80
      volumes:
        - static_data:/var/www/mysite/static/:ro
-       - uwsgi_data:/tmp/uwsgi/
+       - socket_data:/tmp/gunicorn/
      restart: unless-stopped
 
   redis:
@@ -36,5 +36,5 @@ services:
 
 volumes:
   static_data:
-  uwsgi_data:
+  socket_data:
   redis_data:
