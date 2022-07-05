@@ -1,11 +1,11 @@
 version: "3.9"
 services:
-#  web_channel:
-#    build: web/
-#    command: gunicorn mysite.asgi:application --workers 2 --work-class uvicorn.workers.UvicornWorker --bind 0.0.0.0:8001
-#    ports:
-#      - 8001:8001
-#    restart: unless-stopped
+  web_channel:
+    build: web/
+    command: gunicorn --config=gunicorn.channel.conf.py
+    ports:
+      - 8001:8001
+    restart: unless-stopped
 
   web_app:
     build: web/
@@ -17,7 +17,7 @@ services:
 
   nginx:
      depends_on:
-       - web_http
+       - web_app
        - web_channel
      build: nginx/
      ports:
