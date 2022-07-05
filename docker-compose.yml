@@ -3,8 +3,8 @@ services:
   web_channel:
     build: web/
     command: gunicorn --config=gunicorn.channel.conf.py
-    ports:
-      - 8001:8001
+    volumes:
+      - socket_data:/tmp/gunicorn/
     restart: unless-stopped
 
   web_app:

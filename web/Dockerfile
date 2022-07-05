@@ -15,7 +15,7 @@ COPY db.sqlite3 db.sqlite3
 COPY gunicorn.app.conf.py gunicorn.app.conf.py
 COPY gunicorn.channel.conf.py gunicorn.channel.conf.py
 
-RUN pip install gunicorn uvicorn
+RUN pip install gunicorn uvicorn[standard]
 RUN pip install -r requirements.txt
 RUN python3 manage.py collectstatic
 
