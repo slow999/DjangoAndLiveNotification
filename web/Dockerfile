@@ -13,7 +13,6 @@ COPY mysite mysite
 COPY sms sms
 COPY Dockerfile Dockerfile
 COPY manage.py manage.py
-COPY mysite.uwsgi.ini mysite.uwsgi.ini
 COPY db.sqlite3 db.sqlite3
 COPY gunicorn.app.conf.py gunicorn.app.conf.py
 COPY gunicorn.channel.conf.py gunicorn.channel.conf.py
