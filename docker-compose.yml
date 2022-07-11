@@ -2,29 +2,29 @@ version: "3.9"
 services:
   web_channel:
     build: web/
-    command: daphne -b 0.0.0.0 -p 8001 mysite.asgi:application
-    ports:
-      - 8001:8001
+    command: gunicorn --config=gunicorn.channel.conf.py
+    volumes:
+      - socket_data:/tmp/gunicorn/
     restart: unless-stopped
 
-  web_http:
+  web_app:
     build: web/
-    command: uwsgi --ini mysite.uwsgi.ini
+    command: gunicorn --config=gunicorn.app.conf.py
     volumes:
       - static_data:/var/www/mysite/static/
-      - uwsgi_data:/tmp/uwsgi/
+      - socket_data:/tmp/gunicorn/
     restart: unless-stopped
 
   nginx:
      depends_on:
-       - web_http
+       - web_app
        - web_channel
      build: nginx/
      ports:
        - 8888:80
      volumes:
        - static_data:/var/www/mysite/static/:ro
-       - uwsgi_data:/tmp/uwsgi/
+       - socket_data:/tmp/gunicorn/
      restart: unless-stopped
 
   redis:
@@ -36,5 +36,5 @@ services:
 
 volumes:
   static_data:
-  uwsgi_data:
+  socket_data:
   redis_data:
