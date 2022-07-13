@@ -31,7 +31,7 @@ services:
     image: redis
     command: redis-server --requirepass mypassword
     ports:
-      - 6379:6379
+      - 6666:6379
     restart: unless-stopped
 
 volumes:
