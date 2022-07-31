@@ -1,14 +1,14 @@
 version: "3.9"
 services:
   web_channel:
-    build: web/
+    build: .
     command: gunicorn --config=gunicorn.channel.conf.py
     volumes:
       - socket_data:/tmp/gunicorn/
     restart: unless-stopped
 
   web_app:
-    build: web/
+    build: .
     command: gunicorn --config=gunicorn.app.conf.py
     volumes:
       - static_data:/var/www/mysite/static/
@@ -31,7 +31,7 @@ services:
     image: redis
     command: redis-server --requirepass mypassword
     ports:
-      - 6379:6379
+      - 6666:6379
     restart: unless-stopped
 
 volumes:
