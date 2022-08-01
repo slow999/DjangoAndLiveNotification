@@ -7,13 +7,13 @@ from sms.forms import MessageForm
 
 
 # Create your views here.
-def index(request):
-    return render(request, 'sms/index.html', {'unread_count': 9})
+def notification(request):
+    return render(request, 'sms/notification.html', {'unread_count': 9})
 
 
-def new_message(request):
+def send_msg(request):
     if request.method == 'GET':
-        return render(request, 'sms/new_message.html', {'form': MessageForm()})
+        return render(request, 'sms/send_msg.html', {'form': MessageForm()})
     elif request.method == 'POST':
         form = MessageForm(request.POST)
         if form.is_valid():
@@ -24,7 +24,7 @@ def new_message(request):
         else:
             print('Something is wrong')
             print(form.errors)
-        return render(request, 'sms/new_message.html', {'form': MessageForm()})
+        return render(request, 'sms/send_msg.html', {'form': MessageForm()})
     else:
         return HttpResponse('Wrong method.')
 

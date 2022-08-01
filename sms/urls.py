@@ -4,6 +4,6 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('new-msg/', views.index, name='send-msg'),
-    path('send-msg/', views.new_message, name='new-msg'),
+    path('new-msg/', views.notification, name='notification'),
+    path('send-msg/', views.send_msg, name='send_msg'),
 ]
